@@ -28,17 +28,19 @@ gallery.addEventListener('click', selectImg);
 
 function selectImg(event) {
   event.preventDefault();
-  const selectedImgSource = event.target.dataset.source;
-  const instance = basicLightbox.create(
-    `<img src="${selectedImgSource}" width="1400" height="900">`
-  );
-  instance.show();
+  if (event.target.classList.contains('gallery__image')) {
+    const selectedImgSource = event.target.dataset.source;
+    const instance = basicLightbox.create(
+      `<img src="${selectedImgSource}" width="1400" height="900">`
+    );
+    instance.show();
 
-  const keyListenerEvent = event => {
-    if (event.key === 'Escape') {
-      instance.close();
-      document.body.removeEventListener('keydown', keyListenerEvent);
+    const keyListenerEvent = event => {
+      if (event.key === 'Escape') {
+        instance.close();
+        document.body.removeEventListener('keydown', keyListenerEvent);
+      }
     }
+    document.body.addEventListener('keydown', keyListenerEvent);
   };
-  document.body.addEventListener('keydown', keyListenerEvent);
 }
