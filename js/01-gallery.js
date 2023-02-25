@@ -2,28 +2,28 @@ import { galleryItems } from './gallery-items.js';
 // Change code below this line
 
 const galleryDiv = document.querySelector('div.gallery');
-  // const tableOfPreviewImg = [];
+// const tableOfPreviewImg = [];
 
-  // for (let i = 0; i < galleryItems.length; i++) {
-  //   const currentDivImg = document.createElement('div');
-  //   currentDivImg.classList.add('gallery__item');
+// for (let i = 0; i < galleryItems.length; i++) {
+//   const currentDivImg = document.createElement('div');
+//   currentDivImg.classList.add('gallery__item');
 
-  //   const currentLinkImg = document.createElement('a');
-  //   currentLinkImg.classList.add('gallery__link');
-  //   currentLinkImg.setAttribute('href', galleryItems[i].original);
+//   const currentLinkImg = document.createElement('a');
+//   currentLinkImg.classList.add('gallery__link');
+//   currentLinkImg.setAttribute('href', galleryItems[i].original);
 
-  //   const currentImg = document.createElement('img');
-  //   currentImg.classList.add('gallery__image');
-  //   currentImg.setAttribute('src', galleryItems[i].preview);
-  //   currentImg.setAttribute('data-source', galleryItems[i].original);
-  //   currentImg.setAttribute('alt', galleryItems[i].description);
+//   const currentImg = document.createElement('img');
+//   currentImg.classList.add('gallery__image');
+//   currentImg.setAttribute('src', galleryItems[i].preview);
+//   currentImg.setAttribute('data-source', galleryItems[i].original);
+//   currentImg.setAttribute('alt', galleryItems[i].description);
 
-  //   currentLinkImg.append(currentImg);
-  //   currentDivImg.append(currentLinkImg);
-  //   tableOfPreviewImg.push(currentDivImg);
-  // }
+//   currentLinkImg.append(currentImg);
+//   currentDivImg.append(currentLinkImg);
+//   tableOfPreviewImg.push(currentDivImg);
+// }
 
-  // galleryDiv.append(...tableOfPreviewImg);
+// galleryDiv.append(...tableOfPreviewImg);
 
 const myGallery = galleryItems
   .map(
@@ -49,24 +49,23 @@ function selectImg(event) {
   if (event.target.classList.contains('gallery__image')) {
     const selectedImgSource = event.target.dataset.source;
     const instance = basicLightbox.create(
-      `<img src="${selectedImgSource}" width="1400" height="900">`
-      // {
-      //   onShow: () => {
-      //     window.addEventListener('keydown', keyListenerEvent);
-      //   },
-      //   onClose: () => {
-      //     window.removeEventListener('keydown', keyListenerEvent);
-      //   },
-      // }
+      `<img src="${selectedImgSource}" width="1400" height="900">`,
+      {
+        onShow: () => {
+          window.addEventListener('keydown', escapeKeyEventListener);
+        },
+        onClose: () => {
+          window.removeEventListener('keydown', escapeKeyEventListener);
+        },
+      }
     );
 
-    const keyListenerEvent = event => {
+    const escapeKeyEventListener = event => {
       if (event.code === 'Escape') {
         instance.close();
-        document.body.removeEventListener('keydown', keyListenerEvent);
       }
     };
-    document.body.addEventListener('keydown', keyListenerEvent);
+
     instance.show();
   }
 }
